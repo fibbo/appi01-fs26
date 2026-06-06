@@ -1,3 +1,6 @@
+from room import Room
+
+
 class Person:
     def __init__(self, id, name, age, role):
         self.id = id
@@ -18,20 +21,6 @@ class Student(Person):
         self.ecs = ecs
 
 
-class Room:
-    def __init__(self, number, capacity):
-        self.number = number
-        self.capacity = capacity
-
-    def book(self, lecture):
-        if len(lecture.students) <= self.capacity:
-            print(f"Room {self.number} booked for {lecture.subject}")
-        else:
-            print(
-                f"Room {self.number} cannot accommodate {len(lecture.students)} students for {lecture.subject}"
-            )
-
-
 class Lecture:
     def __init__(self, subject, room, lecturer, students):
         self.subject = subject
@@ -39,3 +28,14 @@ class Lecture:
         self.students = students
         self.room = room
         room.book(self)
+
+
+if __name__ == "__main__":
+    lecturer = Staff(1, "Dr. Smith", 45, "Computer Science")
+    students = [
+        Student(2, "Alice", 20, 30),
+        Student(3, "Bob", 22, 28),
+        Student(4, "Charlie", 21, 32),
+    ]
+    room = Room(101, 5)
+    lecture = Lecture("Introduction to Programming", room, lecturer, students)
