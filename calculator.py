@@ -31,9 +31,9 @@ def main():
             print(f"a and b must be numbers: {a, b}")
             continue
         op = input(f"Please select the operation ({VALID_OPERATIONS}): ")
-        # if op not in VALID_OPERATIONS:
-        #     print(f"Invalid operation. Valid operations: {VALID_OPERATIONS}")
-        #     continue
+        if op not in VALID_OPERATIONS:
+            print(f"Invalid operation. Valid operations: {VALID_OPERATIONS}")
+            continue
 
         match op:
             case "+":
