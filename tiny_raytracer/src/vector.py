@@ -3,6 +3,11 @@ import math
 
 class Vector:
     # TODO: Implement constructor
+    def __init__(self, *args):
+        self.components: list[float] = [n for n in args]
+        self.size = len(self.components)
+        # for n in args:
+        #     self.components.append(n)
 
     # TODO: Implement __str__
 
@@ -16,7 +21,14 @@ class Vector:
 
     # TODO: Implement cross product
 
-    # TODO: Implement __add__
+    def __add__(self, other):
+        if self.size != other.size:
+            raise ValueError
+
+        new_components = []
+        for n in range(self.size):
+            new_components.append(self.components[n] + other.components[n])
+        return Vector(*new_components)
 
     # TODO: Implement __sub__ (subtraction)
 
@@ -29,6 +41,15 @@ class Vector:
     # TODO: Implement __neg__ (additive inverse)
 
     # TODO: Implement __eq__
+    def __eq__(self, other):
+        if self.size != other.size:
+            return False
+
+        for n in range(self.size):
+            if self.components[n] != other.components[n]:
+                return False
+
+        return True
 
     # TODO: Implement __getitem__
 

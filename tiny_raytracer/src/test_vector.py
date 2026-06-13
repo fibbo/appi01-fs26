@@ -73,5 +73,17 @@ class VectorTests(unittest.TestCase):
         c = 3 * self.a
         self.assertEqual(c, Vector(3.0, 3.0, 3.0))
 
+    def test_2d_vector(self):
+        a = Vector(1, 2)
+        b = Vector(2, 3)
+        c = a + b
+        self.assertEqual(c, Vector(3, 5))
+
+    def test_add_two_different_sized_vectors(self):
+        a = Vector(1, 2, 3)
+        b = Vector(1, 2)
+        with self.assertRaises(ValueError):
+            c = a + b
+
 
 unittest.main()
