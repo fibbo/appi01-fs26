@@ -11,7 +11,19 @@ class Vector:
 
     # TODO: Implement __str__
 
-    # TODO: Implement properties
+    @property
+    def x(self):
+        return self[0]
+
+    @property
+    def y(self):
+        return self[1]
+
+    @property
+    def z(self):
+        if self.size < 3:
+            print("z property doesn't exist on a vector with less then 3 dimensions.")
+        return self[2]
 
     # TODO: Implement dot product
 
@@ -27,10 +39,13 @@ class Vector:
 
         new_components = []
         for n in range(self.size):
-            new_components.append(self.components[n] + other.components[n])
+            new_components.append(self[n] + other[n])
         return Vector(*new_components)
 
-    # TODO: Implement __sub__ (subtraction)
+    def __sub__(self, other):
+        if self.size != other.size:
+            raise ValueError
+        return self + -other
 
     # TODO: Implement division (which special function name is the correct one?)
 
@@ -38,19 +53,26 @@ class Vector:
 
     # TODO: Try vector * scalar and scalar * vector
 
-    # TODO: Implement __neg__ (additive inverse)
+    def __neg__(self):
+        # return Vector(*[-n for n in self.components])
+        new_components = []
+        for n in range(self.size):
+            new_components.append(-self[n])
+        return Vector(*new_components)
 
-    # TODO: Implement __eq__
     def __eq__(self, other):
         if self.size != other.size:
             return False
 
         for n in range(self.size):
-            if self.components[n] != other.components[n]:
+            if self[n] != other[n]:
                 return False
 
         return True
 
-    # TODO: Implement __getitem__
+    def __getitem__(self, key):
+        if self.size <= key:
+            raise IndexError
+        return self.components[key]
 
     pass

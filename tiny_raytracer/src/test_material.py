@@ -35,4 +35,5 @@ class MaterialTests(unittest.TestCase):
         self.assertTrue(self.material.to_json(), self.material_string)
 
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()

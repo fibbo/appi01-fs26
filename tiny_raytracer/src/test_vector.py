@@ -85,5 +85,11 @@ class VectorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             c = a + b
 
+    def test_access_invalid_property(self):
+        a = Vector(1, 2)
+        with self.assertRaises(IndexError):
+            print(a.z)
 
-unittest.main()
+
+if __name__ == "__main__":
+    unittest.main()

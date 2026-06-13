@@ -21,4 +21,5 @@ class LightTests(unittest.TestCase):
         self.assertEqual(self.light.to_json(), self.json_form)
 
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()
