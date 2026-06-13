@@ -1,78 +1,109 @@
+import json
 import math
 
 
 class Vector:
-    # TODO: Implement constructor
     def __init__(self, *args):
-        self.components: list[float] = [n for n in args]
+        self.components = []
+        for n in args:
+            self.components.append(n)
         self.size = len(self.components)
-        # for n in args:
-        #     self.components.append(n)
 
-    # TODO: Implement __str__
+    def __str__(self):
+        return str(self.components)
+
+    def __repr__(self):
+        return self.__str__()
 
     @property
     def x(self):
-        return self[0]
+        return self.components[0]
 
     @property
     def y(self):
-        return self[1]
+        return self.components[1]
 
     @property
     def z(self):
-        if self.size < 3:
-            print("z property doesn't exist on a vector with less then 3 dimensions.")
-        return self[2]
+        return self.components[2]
 
-    # TODO: Implement dot product
+    def dot(self, rhs):
+        scalar_product = 0
+        assert self.size == rhs.size
+        for i in range(self.size):
+            scalar_product += self.components[i] * rhs.components[i]
+        return scalar_product
 
-    # TODO: Implement norm
+    def norm(self):
+        return math.sqrt(self[0] * self[0] + self[1] * self[1] + self[2] * self[2])
 
     # TODO: Implement normalize
+    def normalize(self, length=1):
+        assert self.size == 3
+        return self / (length * self.norm())
 
-    # TODO: Implement cross product
+    def cross(self, rhs):
+        return Vector(
+            self.y * rhs.z - self.z * rhs.y,
+            self.z * rhs.x - self.x * rhs.z,
+            self.x * rhs.y - self.y * rhs.x,
+        )
 
-    def __add__(self, other):
-        if self.size != other.size:
-            raise ValueError
+    def __add__(self, rhs):
+        new_vec = []
+        for i in range(self.size):
+            new_vec.append(self.components[i] + rhs.components[i])
 
-        new_components = []
-        for n in range(self.size):
-            new_components.append(self[n] + other[n])
-        return Vector(*new_components)
+        # *new_vec unpacks the list. So instead of Vector([1,2,3])
+        # it calls Vector(1, 2, 3)
+        return Vector(*new_vec)
 
-    def __sub__(self, other):
-        if self.size != other.size:
-            raise ValueError
-        return self + -other
+    def __sub__(self, rhs):
+        new_vec = []
+        for i in range(self.size):
+            new_vec.append(self.components[i] - rhs.components[i])
 
-    # TODO: Implement division (which special function name is the correct one?)
+        # *new_vec unpacks the list. So instead of Vector([1,2,3])
+        # it calls Vector(1, 2, 3)
+        return Vector(*new_vec)
 
-    # TODO: Implement __mul__ (multiplication)
+    def __truediv__(self, rhs):
+        new_vec = []
+        for i in range(self.size):
+            new_vec.append(self.components[i] / rhs)
 
-    # TODO: Try vector * scalar and scalar * vector
+        return Vector(*new_vec)
+
+    def __mul__(self, rhs):
+        new_vec = []
+        for i in range(self.size):
+            new_vec.append(self.components[i] * rhs)
+
+        return Vector(*new_vec)
+
+    def __rmul__(self, rhs):
+        return self * rhs
 
     def __neg__(self):
-        # return Vector(*[-n for n in self.components])
-        new_components = []
-        for n in range(self.size):
-            new_components.append(-self[n])
-        return Vector(*new_components)
+        return self * -1
 
-    def __eq__(self, other):
-        if self.size != other.size:
+    def __eq__(self, rhs):
+        if self.size != rhs.size:
             return False
-
-        for n in range(self.size):
-            if self[n] != other[n]:
+        for i in range(self.size):
+            if self.components[i] != rhs.components[i]:
                 return False
-
         return True
 
-    def __getitem__(self, key):
-        if self.size <= key:
-            raise IndexError
-        return self.components[key]
+    def __getitem__(self, index):
+        return self.components[index]
 
-    pass
+    def to_json(self):
+        return json.dumps(self.components)
+
+
+if __name__ == "__main__":
+    vector = Vector(1, 2, 3, 4, 5)
+    print("This is printed from vector.py")
+    print(vector.x)
+    print(vector[0])
